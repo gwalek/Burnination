@@ -3,7 +3,8 @@
 <head>
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <script type="text/javascript" src="https://www.airconsole.com/api/airconsole-1.7.0.js"></script>
-  <style type=text/css>
+  
+    <style type=text/css>
   /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
 
       .button {
@@ -24,13 +25,17 @@
   
   <script type="text/javascript">
 
-      var airconsole; 
-
-    function App() {
-
-        /* JavaScript / Functionality. Add functions and evens here */
-        this.airconsole = new AirConsole({'orientation':'portrait'});
-      
+      var airconsole;
+      /**
+       * Sets up the communication to the screen.
+       */
+      function App() {
+          var me = this;
+          me.airconsole = new AirConsole({ "orientation": "portrait", "synchronize_time": "true" });
+          me.airconsole.onMessage = function (from, data) {
+              console.log("onMessage", from, data);
+              document.getElementById("content").innerHTML = "device " + from + " says: " + data;
+          };
       /*
        * Here we are adding support for mouse events manually.
        * --> WE STRONGLY ENCOURAGE YOU TO USE THE AIRCONSOLE CONTROLS LIBRARY
@@ -57,8 +62,11 @@
     }
 
       App.prototype.sendMessageToScreen = function (msg) {
-          console.log("Button Press");
-          this.airconsole.message(AirConsole.SCREEN, {"action": msg } ); 
+          this.airconsole.message(AirConsole.SCREEN, { "action": msg });
+      };
+
+      App.prototype.broadcastMessage = function (msg) {
+          this.airconsole.broadcast(msg);
       };
 
   </script>

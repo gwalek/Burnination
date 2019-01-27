@@ -24,10 +24,16 @@ public class BurnLogic : MonoBehaviour
 
     void OnMessage(int deviceID, JToken data)
     {
+        Debug.Log("Action?" + data.ToString());
+        
         if (PlayerTable.ContainsKey(deviceID) && data["action"] != null)
         {
+            Debug.Log("Action?????");
             var obj = data["action"];
-            var message = obj.ToObject<string>();
+            Debug.Log("Actionxxxxxx");
+            Debug.Log(obj.GetType().ToString());
+            Debug.Log("Actionyyyyyyy");
+            string message = obj.ToObject<string>();
 
             //Debug.Log(data.ToString()); 
             //string message = data["action"].ToString();
