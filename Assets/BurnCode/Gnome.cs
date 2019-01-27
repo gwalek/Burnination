@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Gnome : MonoBehaviour
 {
-    public bool IsDead = false; 
-
+    public Controller Master; 
+    public bool IsDead = false;
+    public Transform SpawnPoint;
+    public GameObject SpawnPrefab; 
     GnomeState state = GnomeState.Idle; 
 
     public Material Idle;
@@ -19,7 +21,9 @@ public class Gnome : MonoBehaviour
     Material currentSprite;
 
     public List<AudioClip> StompSounds;
-    
+    public AudioClip Wilhelm;
+    public AudioClip ArrowShot;
+
 
     float deathCounter = 0f;
     public float MaxDeathTime = 15f;
@@ -40,7 +44,8 @@ public class Gnome : MonoBehaviour
     Renderer SpriteR;
     Rigidbody RB;
 
-    AudioSource DeathSource; 
+    AudioSource DeathSource;
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +54,9 @@ public class Gnome : MonoBehaviour
         state = GnomeState.Idle;
         SpriteR = SpritePlane.GetComponent<Renderer>();
         RB = gameObject.GetComponent<Rigidbody>();
-        DeathSource = gameObject.AddComponent<AudioSource>(); 
+        DeathSource = gameObject.AddComponent<AudioSource>();
+        
+        
     }
 
     // Update is called once per frame
@@ -71,7 +78,7 @@ public class Gnome : MonoBehaviour
     {
 
         //DebugAnimationStates();
-        GetInputDebug();
+        //GetInputDebug();
 
         RB.velocity = MoveDirection * MoveSpeed;
 
@@ -99,6 +106,8 @@ public class Gnome : MonoBehaviour
         { OnMoveRight();  }
         if (Input.GetKey(KeyCode.X))
         { OnStopMove(); }
+        if (Input.GetKeyDown(KeyCode.Q))
+        { OnShoot(); }
     }
 
     public void OnMoveUp()
@@ -127,11 +136,16 @@ public class Gnome : MonoBehaviour
     {
         MoveDirection = Vector3.zero;
         state = GnomeState.Idle;
-
     }
     public void OnShoot()
     {
-
+        GameObject newArrow = Instantiate(SpawnPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        Arrow a = newArrow.GetComponent<Arrow>();
+        a.SetHitLocation(Dragon.instance.GetHitLocation());
+        DeathSource.PlayOneShot(ArrowShot, .33f);
+        a.Owner = Master;
+        Master.ArrowShot++; 
+ 
     }
     public void OnShield()
     {
@@ -148,23 +162,36 @@ public class Gnome : MonoBehaviour
 
     public void OnDeathFire()
     {
+        if (state == (GnomeState.DeadFire | GnomeState.DeadStomp))
+        { return;  } // We're already dead!
+
         state = GnomeState.DeadFire;
         IsDead = true;
         MoveDirection = Vector3.zero;
+        DeathSource.PlayOneShot(Wilhelm, .7f);
+        Master.Deaths++;
+        Master.DeathsByFire++;
+        Master.DeadGnome();
     }
     public void OnDeathStomp()
     {
+        if (state == (GnomeState.DeadFire | GnomeState.DeadStomp))
+        { return; } // We're already dead!
+
         state = GnomeState.DeadStomp;
         PlayStompSound();
         IsDead = true;
         MoveDirection = Vector3.zero;
+        Master.Deaths++;
+        Master.DeathsByStomp++;
+        Master.DeadGnome();
     }
 
 
     void PlayStompSound()
     {
         int index = Random.Range(1, StompSounds.Count) -1;
-        DeathSource.PlayOneShot(StompSounds[index]); 
+        DeathSource.PlayOneShot(StompSounds[index]);
     }
 
     void DebugAnimationStates()
