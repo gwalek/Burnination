@@ -14,5 +14,12 @@ public class KillVolume : MonoBehaviour
             if (IsStompDamage) { g.OnDeathStomp();  return;  }
             if (IsFireDamage) { g.OnDeathFire(); return; }
         }
+
+        House h = other.GetComponentInParent<House>();
+        if (h) // if this is a gnome\player
+        {
+            if (IsStompDamage) { h.OnDeathStomp(); return; }
+            if (IsFireDamage) { h.OnDeathFire(); return; }
+        }
     }
 }

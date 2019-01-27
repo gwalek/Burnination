@@ -9,7 +9,10 @@ public class BurnLogic : MonoBehaviour
     public static BurnLogic instance;
     public GameObject GnomePrefab;
     public float Spawnoffset = 16f;
-    public Dictionary<int, Controller> PlayerTable; 
+    public Dictionary<int, Controller> PlayerTable;
+    public int HousesBurned = 0;
+    public int HousesEaten = 0;
+    public int HousesDestoyed = 0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,21 +27,9 @@ public class BurnLogic : MonoBehaviour
 
     void OnMessage(int deviceID, JToken data)
     {
-        Debug.Log("Action?" + data.ToString());
-        
         if (PlayerTable.ContainsKey(deviceID) && data["action"] != null)
         {
-            Debug.Log("Action?????");
-            var obj = data["action"];
-            Debug.Log("Actionxxxxxx");
-            Debug.Log(obj.GetType().ToString());
-            Debug.Log("Actionyyyyyyy");
-            string message = obj.ToObject<string>();
-
-            //Debug.Log(data.ToString()); 
-            //string message = data["action"].ToString();
-
-            
+            string message = data["action"].ToString();
 
             if (message == "left")
             {
@@ -55,7 +46,7 @@ public class BurnLogic : MonoBehaviour
                 GetController(deviceID).OnMoveUp();
             }
 
-            if ((string)data == "down")
+            if (message == "down")
             {
                 GetController(deviceID).OnMoveDown();
             }

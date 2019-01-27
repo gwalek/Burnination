@@ -5,6 +5,7 @@ using UnityEngine;
 public class Dragon : MonoBehaviour
 {
     public static Dragon instance;
+    public int MaxHealth = 10000;
     public int Health = 10000; 
     DragonState state = DragonState.Idle; 
     public Material Idle;
@@ -28,7 +29,11 @@ public class Dragon : MonoBehaviour
     public GameObject FlameTrigger2;
     public GameObject FlameTrigger3;
     public AudioClip FlameAttack;
-    AudioSource FlameSource; 
+    AudioSource FlameSource;
+
+    public GameObject Star1;
+    public GameObject Star2;
+    public GameObject Star3;
 
     Material currentSprite;
     Material currentFlameSprite; 
@@ -74,10 +79,20 @@ public class Dragon : MonoBehaviour
         UpdateSprite();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 location)
     {
-        Health -= damage; 
+        if (damage < 1)
+        { return; }
+
+        Health -= damage;
         // Spawn effect based on Damage
+
+        if (damage == 1)
+        { Instantiate(Star1, location, Quaternion.identity); return;  }
+        if (damage == 2)
+        { Instantiate(Star2, location, Quaternion.identity); return;  }
+        if (damage >= 3)
+        { Instantiate(Star3, location, Quaternion.identity); return;  }
     }
 
     public Vector3 GetHitLocation()

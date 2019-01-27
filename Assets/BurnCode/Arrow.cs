@@ -19,7 +19,7 @@ public class Arrow : MonoBehaviour
         if (IsClosetoHitPoint())
         {
             Owner.DamageDelt += damage;
-            Dragon.instance.TakeDamage(damage); 
+            Dragon.instance.TakeDamage(damage, HitLocation); 
             Destroy(gameObject); 
             
 

@@ -69,32 +69,50 @@ public class Controller : MonoBehaviour
 
     public void OnMoveUp()
     {
-        pawn.OnMoveUp();
+        if (pawn)
+        {
+            pawn.OnMoveUp();
+        }
     }
 
     public void OnMoveDown()
     {
-        pawn.OnMoveDown();
+        if (pawn)
+        {
+            pawn.OnMoveDown();
+        }
     }
 
     public void OnMoveLeft()
     {
-        pawn.OnMoveLeft();
+        if (pawn)
+        {
+            pawn.OnMoveLeft();
+        }
     }
 
     public void OnMoveRight()
     {
-        pawn.OnMoveRight();
+        if (pawn)
+        {
+            pawn.OnMoveRight();
+        }
     }
 
     public void OnStopMove()
     {
-        pawn.OnStopMove();
+        if (pawn)
+        {
+            pawn.OnStopMove();
+        }
     }
 
     public void OnShoot()
     {
-        pawn.OnShoot();
+        if (pawn)
+        {
+            pawn.OnShoot();
+        }
     }
 
     void GetInputDebug()
