@@ -24,10 +24,50 @@ public class BurnLogic : MonoBehaviour
 
     void OnMessage(int deviceID, JToken data)
     {
-        Debug.Log(deviceID + " msg: " + data);
-        if (data["action"] != null && data["action"].ToString().Equals("interact"))
+        if (PlayerTable.ContainsKey(deviceID) && data["action"] != null)
         {
-            Camera.main.backgroundColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            var obj = data["action"];
+            var message = obj.ToObject<string>();
+
+            //Debug.Log(data.ToString()); 
+            //string message = data["action"].ToString();
+
+            
+
+            if (message == "left")
+            {
+                GetController(deviceID).OnMoveLeft();
+            }
+
+            if (message == "right")
+            {
+                GetController(deviceID).OnMoveRight();
+            }
+
+            if (message == "up")
+            {
+                GetController(deviceID).OnMoveUp();
+            }
+
+            if ((string)data == "down")
+            {
+                GetController(deviceID).OnMoveDown();
+            }
+
+            if (message == "stop")
+            {
+                GetController(deviceID).OnStopMove();
+            }
+
+            if (message == "shoot")
+            {
+                GetController(deviceID).OnShoot();
+            }
+
+            if (message == "respawn")
+            {
+                GetController(deviceID).SpawnGnome();
+            }
         }
     }
 

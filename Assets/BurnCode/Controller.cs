@@ -30,6 +30,9 @@ public class Controller : MonoBehaviour
 
     public void SpawnGnome()
     {
+        if (pawn != null)
+        { return; } // we have a gnome already! 
+
         Vector3 SpawnLocation = Vector3.zero;
         SpawnLocation.z = Random.Range(-4, 15);
         SpawnLocation.x = (Dragon.instance.gameObject.transform.position.x - BurnLogic.instance.Spawnoffset); 
