@@ -13,6 +13,7 @@ public class BurnLogic : MonoBehaviour
     public int HousesBurned = 0;
     public int HousesEaten = 0;
     public int HousesDestoyed = 0;
+    public string sessionCode = ""; 
     // Start is called before the first frame update
     void Awake()
     {
@@ -69,7 +70,9 @@ public class BurnLogic : MonoBehaviour
     }
 
     void OnReady(string code)
-    { }
+    {
+        sessionCode = code; 
+    }
 
     void OnConnect(int deviceID)
     {

@@ -18,6 +18,7 @@ public class HUD : MonoBehaviour
     public Text GnomeStompDeaths;
     public Text ArrowsShot;
     public Text DamageDone;
+    public Text SessionCode; 
 
     public float counter = 0;
     public float MaxTime = 10f;
@@ -38,8 +39,9 @@ public class HUD : MonoBehaviour
             UpdateGamePannels();
             NextPannel(); 
         }
+        SessionCode.text = BurnLogic.instance.sessionCode; 
 
-        
+
     }
 
     void UpdateGamePannels()
