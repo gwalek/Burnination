@@ -4581,7 +4581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &499135714
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13333,7 +13333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1667394304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13453,6 +13453,8 @@ MonoBehaviour:
   - {fileID: 1271999614}
   - {fileID: 1716698262}
   - {fileID: 1169819363}
+  - {fileID: 605312612}
+  - {fileID: 499135713}
   HealthValue: {fileID: 596590111}
   HouseBurnCount: {fileID: 1761699328}
   HouseEatCount: {fileID: 209714827}

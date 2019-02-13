@@ -5,7 +5,7 @@ using UnityEngine;
 public class HappyStarFace : Pickup
 {
     public AudioClip Sound;
-    AudioSource Deathsource; 
+    protected AudioSource Deathsource; 
     public override void Start()
     {
         base.Start();
